@@ -1,0 +1,36 @@
+button{
+    margin: 8px;
+}
+
+.login-form {
+    width: 300px;
+    margin: 0 auto;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+.login-form input[type="email"],
+.login-form input[type="password"],
+.register-form input[type="name"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+   width: 100%;
+   padding: 10px;
+   margin: 10px 0;
+   border-radius: 3px;
+   border: 1px solid #d64545;
+}
+
+ 
+  /* .login-form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .login-form input[type="submit"]:hover {
+    background-color: #fbff00;
+  } */
