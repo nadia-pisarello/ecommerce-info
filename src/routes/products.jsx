@@ -16,6 +16,7 @@ export default function Productos() {
     e.target.onError = null;
     e.target.src = "../src/assets/photo-off.png";
   };
+
   return (
     <div>
       <div className="productos">

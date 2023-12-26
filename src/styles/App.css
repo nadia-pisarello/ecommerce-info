@@ -32,16 +32,15 @@ li {
 
 .logo {
   height: 12em;
+  padding: 25px;
   will-change: filter;
   transition: filter 300ms;
   max-width: 150px;
   max-height: 150px;
   border-radius: 50%;
-}
-
-.logo:hover {
   filter: drop-shadow(0 0 2em #ff9900e3);
 }
+
 
 nav{
   padding: 1rem;

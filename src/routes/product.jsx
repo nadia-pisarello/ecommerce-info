@@ -56,7 +56,7 @@ export function getProduct(product) {
   return (
     <div>
       <h3>{product.title}</h3>
-      <h4>$ {product.price}</h4>
+      <h4>Precio $ {product.price}</h4>
       <p>{product.description}</p>
       <p>{product.category && product.category.name}</p>
       <div>

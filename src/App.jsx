@@ -15,6 +15,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const AuthContext = createContext(null);
 const queryClient = new QueryClient();
+
 export default function App() {
   const [user, setUser] = useState({
     email: "",
@@ -38,29 +39,61 @@ export default function App() {
     handleLogin,
     handleLogout,
     setUser,
+    message,
   };
 
   const [cart, setCart] = useState([]);
   const addToCart = (product) => {
-    setCart([...cart, product]);
+    const existingProduc = cart.findIndex((p) => p.id === product.id);
+    if (existingProduc !== -1) {
+      const updatedCart = [...cart];
+      updatedCart[existingProduc].quantity += 1;
+      setCart(updatedCart);
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
   };
 
   const handleRemoveFromCart = (product) => {
-    const isConfirmed = window.confirm(
-      "¿Estás seguro de eliminar este producto?"
+    const existingProductIndex = cart.findIndex(
+      (item) => item.id === product.id
     );
-    if (isConfirmed) {
-      removeFromCart(product);
-      setMessage("Producto eliminado del carrito");
-      setTimeout(() => {
-        setMessage(null);
-      }, 2000);
+
+    if (existingProductIndex !== -1) {
+      const productToRemove = cart[existingProductIndex];
+      const isConfirmed = window.confirm(
+        `¿Estás seguro de eliminar ${
+          productToRemove.quantity === 1
+            ? "este producto"
+            : "una unidad de este producto"
+        }?`
+      );
+
+      if (isConfirmed) {
+        removeFromCart(product);
+        setMessage("Producto eliminado del carrito");
+        setTimeout(() => {
+          setMessage(null);
+        }, 2000);
+      }
     }
   };
 
   const removeFromCart = (product) => {
-    const updatedCart = cart.filter((item) => item.id !== product.id);
-    setCart(updatedCart);
+    const existingProductIndex = cart.findIndex(
+      (item) => item.id === product.id
+    );
+
+    if (existingProductIndex !== -1) {
+      const updatedCart = [...cart];
+      if (updatedCart[existingProductIndex].quantity > 1) {
+        updatedCart[existingProductIndex].quantity -= 1;
+      } else {
+        updatedCart.splice(existingProductIndex, 1);
+      }
+
+      setCart(updatedCart);
+    }
   };
 
   useEffect(() => {
@@ -77,7 +110,10 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Root />}>
               <Route index element={<Home />} />
-              <Route path="/products" element={<Productos />} />
+              <Route
+                path="/products"
+                element={<Productos addToCart={addToCart} />}
+              />
               <Route
                 path="/product/:id"
                 element={
@@ -98,6 +134,7 @@ export default function App() {
                 element={
                   <Carrito
                     cart={cart}
+                    addToCart={addToCart}
                     handleRemoveFromCart={handleRemoveFromCart}
                     removeFromCart={removeFromCart}
                   />
