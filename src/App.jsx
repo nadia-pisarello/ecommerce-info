@@ -135,6 +135,7 @@ export default function App() {
                   <Carrito
                     cart={cart}
                     addToCart={addToCart}
+                    setCart={setCart}
                     handleRemoveFromCart={handleRemoveFromCart}
                     removeFromCart={removeFromCart}
                   />
